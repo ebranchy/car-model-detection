@@ -34,7 +34,7 @@ def create_txt_files(csv_path, output_folder):
 input_csv_path = 'temp_lables/normalized_labels_training.csv'
 
 # Specify the path to the output folder
-output_folder_path = 'yolo_lables'
+output_folder_path = 'yolo_lables/cars_train'
 
 # Create text files from CSV
 create_txt_files(input_csv_path, output_folder_path)
