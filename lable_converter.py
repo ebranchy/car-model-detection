@@ -26,7 +26,10 @@ def process_images(csv_input_path, images_folder, csv_output_path):
     with open(csv_input_path, newline='') as csvfile, \
          open(csv_output_path, 'w', newline='') as write_file:
         reader = csv.DictReader(csvfile)
-        fieldnames = ['Class', 'image', 'x', 'y', 'w', 'h']  # specify the headers of the new csv
+        # for training data
+        # fieldnames = ['Class', 'image', 'x', 'y', 'w', 'h']  # specify the headers of the new csv
+        # for val/test data
+        fieldnames = ['image', 'x', 'y', 'w', 'h']  # specify the headers of the new csv
         writer = csv.DictWriter(write_file, fieldnames=fieldnames)
         writer.writeheader()
         
@@ -41,14 +44,17 @@ def process_images(csv_input_path, images_folder, csv_output_path):
                 norm_x, norm_y, norm_w, norm_h = normalize_coordinates(row, width, height)
 
                 # Write normalized coordinates to new csv
-                writer.writerow({'Class': row['Class'], 'image': image_name, 'x': norm_x, 'y': norm_y, 'w': norm_w, 'h': norm_h})
+                # for training data
+                # writer.writerow({'Class': row['Class'], 'image': image_name, 'x': norm_x, 'y': norm_y, 'w': norm_w, 'h': norm_h})
+                # for val/test data
+                writer.writerow({'image': image_name, 'x': norm_x, 'y': norm_y, 'w': norm_w, 'h': norm_h})
             except Exception as e:
                 print(f"Error processing image {image_name}: {str(e)}")
 
 # Update these paths as necessary
-csv_input_path = 'source_lables/cardatasettrain.csv'
-images_folder = 'stanford-cars-dataset/images/cars_train'
-csv_output_path = 'temp_lables/normalized_labels_training.csv'
+csv_input_path = 'source_lables/cardatasettest.csv'
+images_folder = 'stanford-cars-dataset/images/cars_test'
+csv_output_path = 'temp_lables/normalized_labels_val.csv'
 
 process_images(csv_input_path, images_folder, csv_output_path)
 
